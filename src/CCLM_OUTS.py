@@ -22,6 +22,7 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
     CMD = 'scp $mistral:'+ dir_mistral+ name+' ./'
     os.system(CMD)
     nc = NetCDFFile(name)
+    os.remove(name)
     lats = nc.variables['lat'][:]
     lons = nc.variables['lon'][:]
     rlats = nc.variables['rlat'][:]  # extract/copy the data
@@ -42,14 +43,14 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
                    linewidth=0.8)
     t[t < 0] = 0
     if flag=='TRUE':
-        v = np.linspace(0, 3000, 10, endpoint=True)
+        v = np.linspace(0, 3000, 11, endpoint=True)
         cs = plt.contourf(lons, lats, t, v, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain)
         if color_map=='TRUE':
             cb = plt.colorbar(cs)
             cb.set_label(' ', fontsize=20)
             cb.ax.tick_params(labelsize=20)
     ax.add_feature(cartopy.feature.OCEAN,
-                   edgecolor='black', facecolor='gray',
+                   edgecolor='black', facecolor='white',
                    linewidth=0.8)
     ax.gridlines()
     ax.text(-31.14, 4.24, r'$45\degree N$',
