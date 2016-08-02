@@ -7,7 +7,7 @@ This is a function to plot CCLM outputs.
 from netCDF4 import Dataset as NetCDFFile
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
+#from matplotlib.backends.backend_pdf import PdfPages
 import os
 import cartopy.crs as ccrs
 import cartopy.feature
@@ -16,9 +16,10 @@ if not os.path.exists('TEMP'):
     os.makedirs('TEMP')
 os.chdir('TEMP')
 
-def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europe_0440.nc',bcolor='red',var='HSURF',flag='TRUE',pdf='test'):
+def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europe_0440.nc',bcolor='red',var='HSURF',flag='TRUE'
+              ,color_map='TRUE'):
     # type: (object, object, object, object, object, object) -> object
-    CMD = 'scp $mistral:'+dir_mistral+name+' ./'
+    CMD = 'scp $mistral:'+ dir_mistral+ name+' ./'
     os.system(CMD)
     nc = NetCDFFile(name)
     lats = nc.variables['lat'][:]
@@ -27,7 +28,7 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
     rlons = nc.variables['rlon'][:]
     t = nc.variables[var][:].squeeze()
     nc.close()
-    fig = plt.figure()
+    fig = plt.figure('1')
     fig.set_size_inches(18, 10)
     rp = ccrs.RotatedPole(pole_longitude=-162.0,
                           pole_latitude=39.25,
@@ -43,11 +44,12 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
     if flag=='TRUE':
         v = np.linspace(0, 3000, 10, endpoint=True)
         cs = plt.contourf(lons, lats, t, v, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain)
-        cb = plt.colorbar(cs)
-        cb.set_label(' ', fontsize=20)
-        cb.ax.tick_params(labelsize=20)
+        if color_map=='TRUE':
+            cb = plt.colorbar(cs)
+            cb.set_label(' ', fontsize=20)
+            cb.ax.tick_params(labelsize=20)
     ax.add_feature(cartopy.feature.OCEAN,
-                   edgecolor='black', facecolor='white',
+                   edgecolor='black', facecolor='gray',
                    linewidth=0.8)
     ax.gridlines()
     ax.text(-31.14, 4.24, r'$45\degree N$',
@@ -69,5 +71,4 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
                                      np.array([15, 65])).T
     ax.set_xlim(xs)
     ax.set_ylim(ys)
-    plt.savefig("Figure_" +pdf+ ".pdf")
-    plt.close()
+
