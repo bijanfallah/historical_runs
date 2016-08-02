@@ -17,6 +17,7 @@ if not os.path.exists('TEMP'):
 os.chdir('TEMP')
 
 def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europe_0440.nc',bcolor='red',var='HSURF',flag='TRUE',pdf='test'):
+    # type: (object, object, object, object, object, object) -> object
     CMD = 'scp $mistral:'+dir_mistral+name+' ./'
     os.system(CMD)
     nc = NetCDFFile(name)
@@ -40,14 +41,14 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
                    linewidth=0.8)
     t[t < 0] = 0
     if flag=='TRUE':
-        cs = plt.contourf(lons, lats, t, 10, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain)
+        cs = plt.contourf(lons, lats, t, 10, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain , vmin=0, vmax=3000)
         cb = plt.colorbar(cs)
         cb.set_label(' ', fontsize=20)
         cb.ax.tick_params(labelsize=20)
     ax.add_feature(cartopy.feature.OCEAN,
                    edgecolor='black', facecolor='white',
                    linewidth=0.8)
-    ss = ax.gridlines()
+    ax.gridlines()
     ax.text(-31.14, 4.24, r'$45\degree N$',
             fontsize=15)
     ax.text(-31.14, 24.73, r'$60\degree N$',
