@@ -41,7 +41,8 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
                    linewidth=0.8)
     t[t < 0] = 0
     if flag=='TRUE':
-        cs = plt.contourf(lons, lats, t, 10, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain , vmin=0, vmax=3000)
+        v = np.linspace(0, 3000, 10, endpoint=True)
+        cs = plt.contourf(lons, lats, t, v, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain)
         cb = plt.colorbar(cs)
         cb.set_label(' ', fontsize=20)
         cb.ax.tick_params(labelsize=20)
