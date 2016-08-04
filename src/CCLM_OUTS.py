@@ -17,7 +17,7 @@ if not os.path.exists('TEMP'):
 os.chdir('TEMP')
 
 def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europe_0440.nc',bcolor='red',var='HSURF',flag='TRUE'
-              ,color_map='TRUE'):
+              ,color_map='TRUE', alph=1):
     # type: (object, object, object, object, object, object) -> object
     CMD = 'scp $mistral:'+ dir_mistral+ name+' ./'
     os.system(CMD)
@@ -63,13 +63,14 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
             fontsize=15)
     ax.text(24, -29.69, r'$20\degree E$',
             fontsize=15)
-    plt.hlines(y=min(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4)
-    plt.hlines(y=max(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4)
-    plt.vlines(x=min(rlons), ymin=min(rlats), ymax=max(rlats), color=bcolor, linewidth=4)
-    plt.vlines(x=max(rlons), ymin=min(rlats), ymax=max(rlats), color=bcolor, linewidth=4)
+    plt.hlines(y=min(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4, alpha=alph)
+    plt.hlines(y=max(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4, alpha=alph)
+    plt.vlines(x=min(rlons), ymin=min(rlats), ymax=max(rlats), color=bcolor, linewidth=4, alpha=alph)
+    plt.vlines(x=max(rlons), ymin=min(rlats), ymax=max(rlats), color=bcolor, linewidth=4, alpha=alph)
     xs, ys, zs = rp.transform_points(pc,
                                      np.array([-10, 90.0]),
                                      np.array([15, 65])).T
     ax.set_xlim(xs)
     ax.set_ylim(ys)
 
+#os.chdir('../')
