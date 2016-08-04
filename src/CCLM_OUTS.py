@@ -47,7 +47,7 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
         cs = plt.contourf(lons, lats, t, v, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain)
         if color_map=='TRUE':
             cb = plt.colorbar(cs)
-            cb.set_label(' ', fontsize=20)
+            cb.set_label('topography [m]', fontsize=20)
             cb.ax.tick_params(labelsize=20)
     ax.add_feature(cartopy.feature.OCEAN,
                    edgecolor='black', facecolor='white',
