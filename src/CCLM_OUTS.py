@@ -30,7 +30,7 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
     t = nc.variables[var][:].squeeze()
     nc.close()
     fig = plt.figure('1')
-    fig.set_size_inches(18, 10)
+    fig.set_size_inches(14, 10)
     rp = ccrs.RotatedPole(pole_longitude=-162.0,
                           pole_latitude=39.25,
                           globe=ccrs.Globe(semimajor_axis=6370000,
