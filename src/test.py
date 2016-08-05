@@ -1,14 +1,17 @@
 from CCLM_OUTS import Plot_CCLM
 import matplotlib.pyplot as plt
+import gc
+
 Plot_CCLM(bcolor='black', grids='FALSE')
 
 for i in xrange(1,8):
-    Plot_CCLM(dir_mistral='/work/bb0962/work1/work/member0'+str(i)+'/post/', name='lffd1979010100c.nc',
-          bcolor='cyan', var='HSURF', flag='FALSE', color_map='FALSE', alph=.6+(.4/i), grids='FALSE', grids_color='yellow')
+    Plot_CCLM(dir_mistral='/work/bb0962/work1/work/member0'+str(i)+'/post/', name='member0'+str(i)+'_T_2M_ts_monmean.nc',
+          bcolor='cyan', var='T_2M', flag='FALSE', color_map='FALSE', alph=.6+(.4/i), grids='FALSE', grids_color='yellow')
 
-Plot_CCLM(dir_mistral='/work/bb0962/work1/work/member/post/', name='lffd1979010100c.nc',
-          bcolor='red', var='HSURF', flag='FALSE', color_map='FALSE', alph=1, grids='FALSE',grids_color='red')
+Plot_CCLM(dir_mistral='/work/bb0962/work1/work/member/post/', name='member_T_2M_ts_monmean.nc',
+          bcolor='red', var='T_2M', flag='FALSE', color_map='FALSE', alph=1, grids='FALSE',grids_color='red')
 
 pdf='test'
 plt.savefig("Figure_" +pdf+ ".pdf")
 plt.close()
+gc.collect()

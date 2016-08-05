@@ -18,6 +18,7 @@ os.chdir('TEMP')
 
 def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europe_0440.nc',bcolor='red',var='HSURF',flag='TRUE'
               ,color_map='TRUE', alph=1, grids='TRUE', grids_color='red'):
+    # type: (object, object, object, object, object, object, object, object, object) -> object
     # type: (object, object, object, object, object, object) -> object
     CMD = 'scp $mistral:'+ dir_mistral+ name+' ./'
     os.system(CMD)
