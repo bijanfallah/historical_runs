@@ -43,11 +43,14 @@ def calculate_RMSE_of_the_member(member='1', buffer=5):
         RMSE[i] = mean_squared_error(obs_resh, forecast_resh) ** 0.5
     return(RMSE)
 pdf='time_series'
-for i in range(1,8):
-    nam    = calculate_RMSE_of_the_member(i, buffer=6)
+buf=30
+for i in range(1,9):
+    nam    = calculate_RMSE_of_the_member(i, buffer=buf)
     fig = plt.figure('1')
     fig.set_size_inches(14, 10)
     plt.plot(nam, label = str(i))
 plt.legend(loc='best')
-plt.savefig("Figure_" +pdf+ ".pdf")
+plt.savefig("Figure_" +pdf+ "_"+str(buf)+".pdf")
 plt.close()
+# TODO make maps of the RMSE for some random time !!
+# TODO Then maybe run CCLM with smaller domain !!!
