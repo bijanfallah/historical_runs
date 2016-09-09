@@ -67,6 +67,7 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
     if grids=='TRUE':
         rlonss, rlatss = np.meshgrid(rlons,rlats)
         plt.scatter(rlonss, rlatss, marker='o', c=grids_color, s=5, zorder=10)
+
     plt.hlines(y=min(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4, alpha=alph)
     plt.hlines(y=max(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4, alpha=alph)
     plt.vlines(x=min(rlons), ymin=min(rlats), ymax=max(rlats), color=bcolor, linewidth=4, alpha=alph)
