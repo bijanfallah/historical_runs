@@ -12,7 +12,7 @@ from CCLM_OUTS import Plot_CCLM
 # option == 5 ->  shift 4 with corrected smaller cclm domain and nboundlines = 4
 # option == 6 ->  shift 4 with corrected smaller cclm domain and nboundlines = 6
 # option == 7 ->  shift 4 with corrected smaller cclm domain and nboundlines = 9
-
+# option == 8 ->  shift 4 with corrected bigger cclm domain and nboundlines = 3
 from CCLM_OUTS import Plot_CCLM
 def read_data_from_mistral(dir='/work/bb0962/work1/work/member/post/',name='member_T_2M_ts_seasmean.nc',var='T_2M'):
     #a function to read the data from mistral work
@@ -93,7 +93,14 @@ def calculate_MAPS_RMSE_of_the_member(member='1', buffer=4, option=0):
             var='T_2M')
        # pdf_name = "Figure_" + pdf + str(member) + "_" + str(buf) + "relax_9_small.pdf"
         pdf_name="Figure06_RMSE.pdf"
-
+    if option == 8:
+        t_o, lat_o, lon_o, rlat_o, rlon_o = read_data_from_mistral(dir='/work/bb0962/work3/member_relax_3_big/post/',
+                                                                   name='member_relax_3_T_2M_ts_monmean_1995.nc', var='T_2M')
+        t_f, lat_f, lon_f, rlat_f, rlon_f = read_data_from_mistral(dir='/work/bb0962/work3/member0' + str(member) + '_relax_3_big/post/',
+            name='member0' + str(member) + '_relax_3_T_2M_ts_monmean_1995.nc',
+            var='T_2M')
+       # pdf_name = "Figure_" + pdf + str(member) + "_" + str(buf) + "relax_9_small.pdf"
+        pdf_name="Figure07_RMSE.pdf"
     #rel='6'
     #t_o, lat_o, lon_o, rlat_o, rlon_o = read_data_from_mistral(dir='/work/bb0962/work2/member/post/',name='member_T_2M_ts_monmean_1995.nc',var='T_2M')
     #t_f, lat_f, lon_f, rlat_f, rlon_f  = read_data_from_mistral(dir='/work/bb0962/work2/member/post/',name='member_T_2M_ts_monmean_1995.nc',var='T_2M')
@@ -110,12 +117,24 @@ def calculate_MAPS_RMSE_of_the_member(member='1', buffer=4, option=0):
     os.system('rm -f *.nc')
     row_lat = lat_o[buffer, buffer].squeeze()
     row_lon = lon_o[buffer, buffer].squeeze()
-    start_lon = np.where(lon_f == row_lon)[-1][0]
-    start_lat = np.where(lat_f == row_lat)[0][-1]
+    print(row_lat)
+    print(row_lon)
+    #print(lat_o)[0,0]
+    #print(lat_o)[0,-1]
+    #print(lon_f)
+    #start_lon = np.where(lon_f == row_lon)[-1][0]
+    #start_lat = np.where(lat_f == row_lat)[0][-1]
+
+    #start_lon = np.where((lon_f-row_lon)<0.001)[-1][0]
+    #start_lat = np.where((lat_f-row_lat)<0.001)[0][-1]
+    start_lon=(buffer+4)
+    start_lat=(buffer-4)
+    print('nowwwwwwwww')
     print(start_lat)
     print(start_lon)
     dext_lon = t_o.shape[2] - (2 * buffer)
     dext_lat = t_o.shape[1] - (2 * buffer)
+    print('thennnnnnnn')
     print(dext_lon)
     print(dext_lat)
     forecast = t_f[:, start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
@@ -137,17 +156,24 @@ def calculate_MAPS_RMSE_of_the_member(member='1', buffer=4, option=0):
 import cartopy.crs as ccrs
 import cartopy.feature
 
-option=4
-buf=5
+option=8
+buf=20
 for i in range(4,5):
     nam , lats_f1, lons_f1, rlat_f, rlon_f, rlat_o, rlon_o , pdf_name   = calculate_MAPS_RMSE_of_the_member(i, buffer=buf, option=option)
     fig = plt.figure('1')
     fig.set_size_inches(14, 10)
     #Plot_CCLM(bcolor='black', grids='FALSE')
-    rp = ccrs.RotatedPole(pole_longitude=-162.0,
-                          pole_latitude=39.25,
+    #rp = ccrs.RotatedPole(pole_longitude=-162.0,
+    #                      pole_latitude=39.25,
+    #                      globe=ccrs.Globe(semimajor_axis=6370000,
+    #                                       semiminor_axis=6370000))
+
+    rp = ccrs.RotatedPole(pole_longitude=-165.0,
+                          pole_latitude=46.0,
                           globe=ccrs.Globe(semimajor_axis=6370000,
                                            semiminor_axis=6370000))
+
+
     pc = ccrs.PlateCarree()
     ax = plt.axes(projection=rp)
     ax.coastlines('50m', linewidth=0.8)
@@ -190,14 +216,16 @@ for i in range(4,5):
 
     plt.title("Shift "+ str(i)+pdf_name)
 
-
-
     xs, ys, zs = rp.transform_points(pc,
-                                     np.array([-10, 90.0]),
-                                     np.array([15, 65])).T
+                                     np.array([-13, 105.0]),
+                                     np.array([3, 60])).T
+    # rp = ccrs.RotatedPole(pole_longitude=-162.0,
+    #                      pole_latitude=39.25,
+    #                      globe=ccrs.Globe(semimajor_axis=6370000,
+    #                                          semiminor_axis=6370000))
     ax.set_xlim(xs)
     ax.set_ylim(ys)
-    Plot_CCLM(bcolor='black', grids='FALSE', flag='FALSE')
+   # Plot_CCLM(bcolor='black', grids='FALSE', flag='FALSE')
     plt.savefig(pdf_name)
 
     plt.close()
