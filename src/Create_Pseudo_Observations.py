@@ -1,4 +1,5 @@
 # Program to show the maps of RMSE averaged over time
+# Between the shifted and centeral domain
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 import os
@@ -56,8 +57,8 @@ def calculate_PSEUDOOBS_of_the_member(member='1', buffer=4):
     RMSE=np.zeros((forecast.shape[1],forecast.shape[2]))
     lats_f1=lat_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
     lons_f1=lon_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
-    print(forecast.shape[:])
-    print(obs.shape[:])
+    print('forecast shape :'+  str(forecast.shape[:]))
+    print('obs shape: '+ str(obs.shape[:]))
     for i in range(0,forecast.shape[1]):
         for j in range(0,forecast.shape[2]):
             forecast_resh=np.squeeze(forecast[:,i,j])
@@ -65,7 +66,7 @@ def calculate_PSEUDOOBS_of_the_member(member='1', buffer=4):
 
             RMSE[i,j] = mean_squared_error(obs_resh, forecast_resh) ** 0.5
 
-    return(RMSE, lats_f1, lons_f1, rlat_f, rlon_f, rlat_o, rlon_o)
+    return(RMSE, forecast ,lats_f1, lons_f1, rlat_f, rlon_f, rlat_o, rlon_o)
 
 import cartopy.crs as ccrs
 import cartopy.feature
@@ -73,7 +74,7 @@ import cartopy.feature
 
 buf=20
 for i in range(4,5):
-    nam , lats_f1, lons_f1, rlat_f, rlon_f, rlat_o, rlon_o   = calculate_PSEUDOOBS_of_the_member(i, buffer=buf)
+    nam , forecast ,lats_f1, lons_f1, rlat_f, rlon_f, rlat_o, rlon_o   = calculate_PSEUDOOBS_of_the_member(i, buffer=buf)
     fig = plt.figure('1')
     fig.set_size_inches(14, 10)
     rp = ccrs.RotatedPole(pole_longitude=-165.0,
@@ -126,7 +127,7 @@ for i in range(4,5):
     plt.savefig(pdf_name)
 
     plt.close()
-    ## TODO : I will create noisy observations for the OI scheme
+    ## TODO : I will create noisy observations for the OI scheme :this is done with the "make_pseudo_obs.py"!!!!!
     ## TODO: Then I will conduct the OI to see if it improves the results for the shifted domain inth 4 direction!!
 
 

@@ -1,4 +1,5 @@
-def extract_pseudo(NN=600):
+def extract_pseudo(NN=600, dir='/work/bb0962/work3/member_relax_3_big/post/', name='member_relax_3_T_2M_ts_monmean_1995.nc'
+                   , var='T_2M'):
     '''
     :param NN: number of observations
     :return: PO, lon, lat, rlon, rlat pseudo obs and their locations in rotated and regular grid
@@ -17,16 +18,14 @@ def extract_pseudo(NN=600):
 
     mapping = Rotgrid(-165.0, 46.0, 0, 0)
     for i in range(0, NN):
-        print(t.values()[i])
+       # print(t.values()[i])
         (TT[i], SS[i]) = mapping.transform(TT[i], SS[i])
 
     points=np.zeros((NN,3))
     points[:, 1] = SS[0:NN]
     points[:, 2] = TT[0:NN]
 
-    t_o, lat_o, lon_o, rlat_o, rlon_o = rdfm(dir='/work/bb0962/work3/member_relax_3_big/post/',
-                                             name='member_relax_3_T_2M_ts_monmean_1995.nc',
-                                             var='T_2M')
+    t_o, lat_o, lon_o, rlat_o, rlon_o = rdfm(dir, name, var)
 
 
     print(t_o.shape)

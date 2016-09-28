@@ -15,6 +15,7 @@ from CCLM_OUTS import Plot_CCLM
 # option == 8 ->  shift 4 with corrected bigger cclm domain and nboundlines = 3
 from CCLM_OUTS import Plot_CCLM
 def read_data_from_mistral(dir='/work/bb0962/work1/work/member/post/',name='member_T_2M_ts_seasmean.nc',var='T_2M'):
+    # type: (object, object, object) -> object
     #a function to read the data from mistral work
 
     """
