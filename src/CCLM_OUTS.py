@@ -83,9 +83,9 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
     pc = ccrs.PlateCarree()
     ax = plt.axes(projection=rp)
     ax.coastlines('50m', linewidth=0.8)
-    #ax.add_feature(cartopy.feature.LAKES,
-    #               edgecolor='black', facecolor='none',
-    #               linewidth=0.8)
+    ax.add_feature(cartopy.feature.LAKES,
+                   edgecolor='black', facecolor='none',
+                   linewidth=0.8)
     t[t < 0] = 0
     if flag=='TRUE':
         v = np.linspace(0, 3000, 11, endpoint=True)
@@ -94,9 +94,9 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
             cb = plt.colorbar(cs)
             cb.set_label('topography [m]', fontsize=20)
             cb.ax.tick_params(labelsize=20)
-    ax.add_feature(cartopy.feature.OCEAN,
-                   edgecolor='black', facecolor='white',
-                   linewidth=0.8)
+    #ax.add_feature(cartopy.feature.OCEAN,
+    #               edgecolor='black', facecolor='white',
+    #               linewidth=0.8)
     ax.gridlines()
     ax.text(-31.14, 4.24, r'$45\degree N$',
             fontsize=15)
@@ -110,7 +110,7 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
             fontsize=15)
     if grids=='TRUE':
         rlonss, rlatss = np.meshgrid(rlons,rlats)
-        plt.scatter(rlonss, rlatss, marker='o', c=grids_color, s=2)
+        plt.scatter(rlonss, rlatss, marker='.', c=grids_color, s=2, alpha=.4)
     if rand_obs=='TRUE':
         s,t = rand_station_locations(N=500, sed=777)
 
@@ -121,8 +121,8 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
         SS=s.values()
         for i in range(0,300):
             (TT[i], SS[i]) = mapping.transform(TT[i], SS[i])
-            plt.scatter(TT[i], SS[i], marker='+', c=grids_color, s=2, zorder=10)
-            print(TT[i],SS[i])
+            plt.scatter(TT[i], SS[i], marker='+', c=grids_color, s=10, zorder=10)
+           # print(TT[i],SS[i])
 
     plt.hlines(y=min(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4, alpha=alph)
     plt.hlines(y=max(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4, alpha=alph)

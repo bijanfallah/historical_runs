@@ -17,6 +17,10 @@ from CCLM_OUTS import Plot_CCLM
 def read_data_from_mistral(dir='/work/bb0962/work1/work/member/post/',name='member_T_2M_ts_seasmean.nc',var='T_2M'):
     #a function to read the data from mistral work
 
+    """
+
+    :rtype: object
+    """
     CMD = 'scp $mistral:' + dir + name + ' ./'
     os.system(CMD)
     nc = NetCDFFile(name)
@@ -117,8 +121,8 @@ def calculate_MAPS_RMSE_of_the_member(member='1', buffer=4, option=0):
     os.system('rm -f *.nc')
     row_lat = lat_o[buffer, buffer].squeeze()
     row_lon = lon_o[buffer, buffer].squeeze()
-    print(row_lat)
-    print(row_lon)
+    #print(row_lat)
+    #print(row_lon)
     #print(lat_o)[0,0]
     #print(lat_o)[0,-1]
     #print(lon_f)
@@ -129,21 +133,21 @@ def calculate_MAPS_RMSE_of_the_member(member='1', buffer=4, option=0):
     #start_lat = np.where((lat_f-row_lat)<0.001)[0][-1]
     start_lon=(buffer+4)
     start_lat=(buffer-4)
-    print('nowwwwwwwww')
-    print(start_lat)
-    print(start_lon)
+    #print('nowwwwwwwww')
+    #print(start_lat)
+    #print(start_lon)
     dext_lon = t_o.shape[2] - (2 * buffer)
     dext_lat = t_o.shape[1] - (2 * buffer)
-    print('thennnnnnnn')
-    print(dext_lon)
-    print(dext_lat)
+    #print('thennnnnnnn')
+    #print(dext_lon)
+    #print(dext_lat)
     forecast = t_f[:, start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
     obs = t_o[:, buffer:buffer + dext_lat, buffer:buffer + dext_lon]
     RMSE=np.zeros((forecast.shape[1],forecast.shape[2]))
     lats_f1=lat_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
     lons_f1=lon_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
-    print(forecast.shape[:])
-    print(obs.shape[:])
+    #print(forecast.shape[:])
+    #print(obs.shape[:])
     for i in range(0,forecast.shape[1]):
         for j in range(0,forecast.shape[2]):
             forecast_resh=np.squeeze(forecast[:,i,j])
