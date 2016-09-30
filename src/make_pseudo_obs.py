@@ -1,19 +1,21 @@
-def extract_pseudo(NN=600, dir='/work/bb0962/work3/member_relax_3_big/post/', name='member_relax_3_T_2M_ts_monmean_1995.nc'
-                   , var='T_2M'):
+def extract_pseudo(NN=2000,dir='/work/bb0962/work3/member_relax_3_big/post/',name='member_relax_3_T_2M_ts_monmean_1995.nc',var='T_2M'):
+
     '''
-    :param NN: number of observations
+    :param nn: number of observations
     :return: PO, lon, lat, rlon, rlat pseudo obs and their locations in rotated and regular grid
     '''
 
     import numpy as np
-    np.random.seed(777)
+
     import random
     random.seed(777)
     from RMSE_MAPS_INGO import read_data_from_mistral as rdfm
     from CCLM_OUTS import rand_station_locations as rsl
-    s, t = rsl(N=1000, sed=777)
-    TT=t.values()
-    SS=s.values()
+    s, t = rsl(N=7000, sed=777)
+    #TT=t.values()
+    TT=t
+    #SS=s.values()
+    SS=s
     from rotgrid import Rotgrid
 
     mapping = Rotgrid(-165.0, 46.0, 0, 0)
@@ -24,7 +26,7 @@ def extract_pseudo(NN=600, dir='/work/bb0962/work3/member_relax_3_big/post/', na
     points=np.zeros((NN,3))
     points[:, 1] = SS[0:NN]
     points[:, 2] = TT[0:NN]
-
+    points.shape
     t_o, lat_o, lon_o, rlat_o, rlon_o = rdfm(dir, name, var)
 
 
@@ -39,8 +41,9 @@ def extract_pseudo(NN=600, dir='/work/bb0962/work3/member_relax_3_big/post/', na
         points[:, 0] = np.zeros(NN)+i
         Interp_Vals[:,i] = my_interpolating_function(points)
     for k in range(0,NN):
+        np.random.seed(777+k)
         #noise[k,:] = np.random.normal(0, np.sqrt(np.var(Interp_Vals[k,:])/200), 12)
-        noise[k,:] = np.random.normal(0, .5, 12)
+        noise[k,:] = np.random.normal(0, .3, 12)
         Interp_Vals_dirty[k,:] = Interp_Vals[k,:] + noise[k,:]
 
 
@@ -48,7 +51,7 @@ def extract_pseudo(NN=600, dir='/work/bb0962/work3/member_relax_3_big/post/', na
 
 # Programs body
 import numpy as np
-NN=200
+NN=1000#Number of Observations
 Temp_Station_dirty, Temp_Station, rlon_s, rlat_s, t_o , rlon_o, rlat_o=extract_pseudo(NN)
 
 #for checking put flag='TRUE'
@@ -84,8 +87,8 @@ with open('Stations_DATA.csv', 'wb') as f:
 
 
 
-import pandas as pd
-df = pd.read_csv('Stations_DATA.csv')
-df.columns=['lon','lats','Vals','Vals_dirty','Time']
+#import pandas as pd
+#df = pd.read_csv('Stations_DATA.csv')
+#df.columns=['lon','lats','Vals','Vals_dirty','Time']
 
 

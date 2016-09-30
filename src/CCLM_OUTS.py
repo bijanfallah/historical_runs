@@ -37,17 +37,17 @@ def rand_station_locations(N=50,sed=777):
 
     # # Choose N random stations
     random.seed(sed)
-    rand_obs_number = random.sample(range(0, 10001), N)
+    rand_obs_number = random.sample(range(0, 10001), 9900)
     k = 0
     lat={}
     lon={}
     for i in rand_obs_number:
-        if float(pairs[i][0])>20 and float(pairs[i][0])<72 and float(pairs[i][1]) > -12 and float(pairs[i][1]) < 45:
+        if 30 < float(pairs[i][0]) < 65 and -10 < float(pairs[i][1]) < 44:
             lat[k]= float(pairs[i][0])
             lon[k] = float(pairs[i][1])
             k = k + 1
 
-    return(lat,lon)
+    return(lat.values()[0:N],lon.values()[0:N])
 
 
 
@@ -57,7 +57,7 @@ if not os.path.exists('TEMP'):
 os.chdir('TEMP')
 
 def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europe_0440.nc',bcolor='red',var='HSURF',flag='TRUE'
-              ,color_map='TRUE', alph=1, grids='TRUE', grids_color='red', rand_obs='FALSE'):
+              ,color_map='TRUE', alph=1, grids='TRUE', grids_color='red', rand_obs='FALSE', NN=500):
     # type: (object, object, object, object, object, object, object, object, object) -> object
     # type: (object, object, object, object, object, object) -> object
     CMD = 'scp $mistral:'+ dir_mistral+ name+' ./'
@@ -94,42 +94,48 @@ def Plot_CCLM(dir_mistral='/scratch/b/b324045/cclm-sp_2.1/data/ext/',name='europ
             cb = plt.colorbar(cs)
             cb.set_label('topography [m]', fontsize=20)
             cb.ax.tick_params(labelsize=20)
-    #ax.add_feature(cartopy.feature.OCEAN,
-    #               edgecolor='black', facecolor='white',
-    #               linewidth=0.8)
+    ax.add_feature(cartopy.feature.OCEAN,
+                   edgecolor='black', facecolor='white',
+                   linewidth=0.8)
     ax.gridlines()
-    ax.text(-31.14, 4.24, r'$45\degree N$',
+    ax.text(-45.14, 15.24, r'$45\degree N$',
             fontsize=15)
-    ax.text(-31.14, 24.73, r'$60\degree N$',
+    ax.text(-45.14, 35.73, r'$60\degree N$',
             fontsize=15)
-    ax.text(-19.83, -29.69, r'$0\degree $',
+    ax.text(-45.14, -3.73, r'$30\degree N$',
             fontsize=15)
-    ax.text(2.106, -29.69, r'$20\degree E$',
+    ax.text(-45.14, -20.73, r'$15\degree N$',
             fontsize=15)
-    ax.text(24, -29.69, r'$20\degree E$',
+    ax.text(-19.83, -35.69, r'$0\degree $',
             fontsize=15)
+    ax.text(15.106, -35.69, r'$20\degree E$',
+            fontsize=15)
+    #ax.text(26, -29.69, r'$40\degree E$',
+    #        fontsize=15)
     if grids=='TRUE':
         rlonss, rlatss = np.meshgrid(rlons,rlats)
         plt.scatter(rlonss, rlatss, marker='.', c=grids_color, s=2, alpha=.4)
     if rand_obs=='TRUE':
-        s,t = rand_station_locations(N=500, sed=777)
+        s,t = rand_station_locations(NN, sed=777)
 
         #tt,ss=np.meshgrid(t.values(),s.values())
         from rotgrid import Rotgrid
         mapping = Rotgrid(-165.0,46.0,0,0)
-        TT=t.values()
-        SS=s.values()
-        for i in range(0,300):
+        #TT=t.values()
+        #SS=s.values()
+        TT=t
+        SS=s
+        for i in range(0,NN):#just for sed -i
             (TT[i], SS[i]) = mapping.transform(TT[i], SS[i])
             plt.scatter(TT[i], SS[i], marker='+', c=grids_color, s=10, zorder=10)
            # print(TT[i],SS[i])
 
-    plt.hlines(y=min(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4, alpha=alph)
-    plt.hlines(y=max(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor, linewidth=4, alpha=alph)
-    plt.vlines(x=min(rlons), ymin=min(rlats), ymax=max(rlats), color=bcolor, linewidth=4, alpha=alph)
-    plt.vlines(x=max(rlons), ymin=min(rlats), ymax=max(rlats), color=bcolor, linewidth=4, alpha=alph)
+    plt.hlines(y=min(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor,linestyles= 'dashed', linewidth=2, alpha=alph)
+    plt.hlines(y=max(rlats), xmin=min(rlons), xmax=max(rlons), color=bcolor,linestyles= 'dashed', linewidth=2, alpha=alph)
+    plt.vlines(x=min(rlons), ymin=min(rlats), ymax=max(rlats), color=bcolor,linestyles= 'dashed', linewidth=2, alpha=alph)
+    plt.vlines(x=max(rlons), ymin=min(rlats), ymax=max(rlats), color=bcolor,linestyles= 'dashed', linewidth=2, alpha=alph)
     xs, ys, zs = rp.transform_points(pc,
-                                     np.array([-13, 105.0]),
+                                     np.array([-17, 105.0]),
                                      np.array([3, 60])).T
     ax.set_xlim(xs)
     ax.set_ylim(ys)

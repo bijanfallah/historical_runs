@@ -190,20 +190,24 @@ for i in range(4,5):
     cb = plt.colorbar(cs)
     cb.set_label('RMSE [K]', fontsize=20)
     cb.ax.tick_params(labelsize=20)
-    #ax.add_feature(cartopy.feature.OCEAN,
-    #               edgecolor='black', facecolor='white',
-    #               linewidth=0.8)
+    ax.add_feature(cartopy.feature.OCEAN,
+                   edgecolor='black', facecolor='white',
+                   linewidth=0.8)
     ax.gridlines()
-    ax.text(-31.14, 4.24, r'$45\degree N$',
+    ax.text(-45.14, 15.24, r'$45\degree N$',
             fontsize=15)
-    ax.text(-31.14, 24.73, r'$60\degree N$',
+    ax.text(-45.14, 35.73, r'$60\degree N$',
             fontsize=15)
-    ax.text(-19.83, -29.69, r'$0\degree $',
+    ax.text(-45.14, -3.73, r'$30\degree N$',
             fontsize=15)
-    ax.text(2.106, -29.69, r'$20\degree E$',
+    ax.text(-45.14, -20.73, r'$15\degree N$',
             fontsize=15)
-    ax.text(24, -29.69, r'$20\degree E$',
+    ax.text(-19.83, -35.69, r'$0\degree $',
             fontsize=15)
+    ax.text(15.106, -35.69, r'$20\degree E$',
+            fontsize=15)
+    #ax.text(26, -29.69, r'$40\degree E$',
+    #        fontsize=15)
     plt.hlines(y=min(rlat_f), xmin=min(rlon_f), xmax=max(rlon_f), color='red',linestyles= 'dashed', linewidth=2)
     plt.hlines(y=max(rlat_f), xmin=min(rlon_f), xmax=max(rlon_f), color='red',linestyles= 'dashed', linewidth=2)
     plt.vlines(x=min(rlon_f), ymin=min(rlat_f), ymax=max(rlat_f), color='red',linestyles= 'dashed', linewidth=2)
@@ -222,7 +226,7 @@ for i in range(4,5):
     plt.title("Shift "+ str(i)+pdf_name)
 
     xs, ys, zs = rp.transform_points(pc,
-                                     np.array([-13, 105.0]),
+                                     np.array([-17, 105.0]),
                                      np.array([3, 60])).T
     # rp = ccrs.RotatedPole(pole_longitude=-162.0,
     #                      pole_latitude=39.25,

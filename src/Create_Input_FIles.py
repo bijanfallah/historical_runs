@@ -11,19 +11,18 @@ error variance of the background field
 
 #Step 1:
 flag1=True
-NN=200      #number of observations
-COR_LEN=2   #correlation length
-N=30        #number of influential points
+NN=1000  #number of observations
 import pandas as pd
 from make_pseudo_obs import extract_pseudo
 Obs = pd.read_csv('Stations_DATA.csv')
 Obs.columns=['lon','lat','Vals','Vals_dirty','Time']
 if flag1==True :
-    NN=200
-    First_Guess_dirty, First_Guess, rlon_s, rlat_s, t_o , rlon_o, rlat_o=extract_pseudo(NN,
-                                                                                dir='/work/bb0962/work3/member04_relax_3_big/post/',
-                                                                                name='member04_relax_3_T_2M_ts_monmean_1995.nc',
-                                                                                var='T_2M')
+   # First_Guess_dirty, First_Guess, rlon_s, rlat_s, t_o , rlon_o, rlat_o=extract_pseudo(NN=500,
+   #                                                                                     dir='/work/bb0962/work3/member04_relax_3_big/post/',
+   #                                                                                     name='member04_relax_3_T_2M_ts_monmean_1995.nc',
+   #                                                                                     var='T_2M')
+    First_Guess_dirty, First_Guess, rlon_s, rlat_s, t_o , rlon_o, rlat_o=extract_pseudo(NN,dir='/work/bb0962/work3/member04_relax_3_big/post/',name='member04_relax_3_T_2M_ts_monmean_1995.nc')
+
     import csv
     from itertools import izip
     from itertools import repeat
@@ -70,6 +69,8 @@ with open('INPUT.csv', 'wb') as ff:
 # Write the grids for forecast domain :
 
 xv, yv = np.meshgrid(rlon_o, rlat_o, sparse=False, indexing='ij')
+np.savetxt('LON.out', xv, delimiter=',')
+np.savetxt('LAT.out', yv, delimiter=',')
 leng=rlon_o.__len__()*rlat_o.__len__()
 lons=xv.reshape(leng,1)
 lats=yv.reshape(leng,1)
@@ -80,8 +81,8 @@ with open('GRIDS.csv', 'wb') as gr:
         writer.writerows(izip(lons[i],lats[i]))
 
 
-## TODO : 1- Write the octave code to read the GRIDS.csv and INPUT.csv and run the IO and write the OUT.csv
-## TODO : 2- write the pythom code to add the OUT to the BForecast and write the Analysis NETCDF file
-## TODO : 3- Plot the RMSE of this new analysis and the "TRUE" simulation
+## TODO : 1- Write the bash script which runs all the codes and replaces the input files
+## TODO : 2-
+## TODO : 3-
 
 
