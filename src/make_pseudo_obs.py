@@ -26,7 +26,7 @@ def extract_pseudo(NN=2000,dir='/work/bb0962/work3/member_relax_3_big/post/',nam
     points=np.zeros((NN,3))
     points[:, 1] = SS[0:NN]
     points[:, 2] = TT[0:NN]
-    points.shape
+
     t_o, lat_o, lon_o, rlat_o, rlon_o = rdfm(dir, name, var)
 
 
@@ -51,7 +51,7 @@ def extract_pseudo(NN=2000,dir='/work/bb0962/work3/member_relax_3_big/post/',nam
 
 # Programs body
 import numpy as np
-NN=1000#Number of Observations
+NN=600#Number of Observations
 Temp_Station_dirty, Temp_Station, rlon_s, rlat_s, t_o , rlon_o, rlat_o=extract_pseudo(NN)
 
 #for checking put flag='TRUE'

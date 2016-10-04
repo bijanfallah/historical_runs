@@ -10,11 +10,5 @@ plt.savefig('Stations.pdf')
 plt.close()
 
 ### http://eca.knmi.nl/download/ensembles/Haylock_et_al_2008.pdf
-# TODO: 1- Find the nearest obs grid to the station ---Done
-# TODO: 2- Assign the value of this point to the station (or using the interpolation method !!!????) --Done
-# TODO: 3- Add random white noise to the Station (import numpy as np, pure = np.linspace(-1, 1, 100),
-# TODO:    noise = np.random.normal(0, 1, 100),signal = pure + noise)
-# TODO: Polish the code (reproduceable)
-# TODO: add the YUSCF-- files of the two domain runs to the pdf!!!
-# TODO: and the netcdf file?!!!!!
+
 

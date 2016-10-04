@@ -11,7 +11,8 @@ error variance of the background field
 
 #Step 1:
 flag1=True
-NN=1000  #number of observations
+#NN=1000#number of observations
+NN=600
 import pandas as pd
 from make_pseudo_obs import extract_pseudo
 Obs = pd.read_csv('Stations_DATA.csv')
@@ -81,8 +82,5 @@ with open('GRIDS.csv', 'wb') as gr:
         writer.writerows(izip(lons[i],lats[i]))
 
 
-## TODO : 1- Write the bash script which runs all the codes and replaces the input files
-## TODO : 2-
-## TODO : 3-
 
 

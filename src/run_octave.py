@@ -2,11 +2,12 @@
 from oct2py import octave
 import numpy as np
 from RMSE_MAPS_INGO import read_data_from_mistral as rdfm
-DIR='/var/autofs/net/home/fallah/Documents/DATA_ASSIMILATION/Bijan/CODES/Optimal_Interpolation/optiminterp/inst/'
+DIR='/home/fallah/Documents/DATA_ASSIMILATION/Bijan/CODES/Optimal_Interpolation/optiminterp/inst/'
 octave.run(DIR+"run_IO.m")
 
 ## read forecast :
-NN=100#number of observations should be read from previous funcions!!!!
+#NN=1000#number of observations should be read from previous funcions!!!!
+NN=600
 month_length=12
 t_f, lat_f, lon_f, rlat_f, rlon_f =rdfm(dir='/work/bb0962/work3/member04_relax_3_big/post/',
                                         name='member04_relax_3_T_2M_ts_monmean_1995.nc',
@@ -72,21 +73,32 @@ pc = ccrs.PlateCarree()
 ax = plt.axes(projection=rp)
 ax.coastlines('50m', linewidth=0.8)
 v = np.linspace(0, 1, 11, endpoint=True)
+# Write the RMSE mean in a file
+import csv
+from itertools import izip
+names='RMSE_'+pdf_name+'.csv'
+with open(names, 'wb') as f:
+     writer = csv.writer(f)
+     writer.writerow([NN,np.mean(RMSE)])
+
 
 cs=plt.contourf(lons_f1, lats_f1, RMSE,v, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain)
+
 cb = plt.colorbar(cs)
 cb.set_label('RMSE [K]', fontsize=20)
 cb.ax.tick_params(labelsize=20)
 ax.gridlines()
-ax.text(-31.14, 4.24, r'$45\degree N$',
+ax.text(-45.14, 15.24, r'$45\degree N$',
         fontsize=15)
-ax.text(-31.14, 24.73, r'$60\degree N$',
+ax.text(-45.14, 35.73, r'$60\degree N$',
         fontsize=15)
-ax.text(-19.83, -29.69, r'$0\degree $',
+ax.text(-45.14, -3.73, r'$30\degree N$',
         fontsize=15)
-ax.text(2.106, -29.69, r'$20\degree E$',
+ax.text(-45.14, -20.73, r'$15\degree N$',
         fontsize=15)
-ax.text(24, -29.69, r'$20\degree E$',
+ax.text(-19.83, -35.69, r'$0\degree $',
+        fontsize=15)
+ax.text(15.106, -35.69, r'$20\degree E$',
         fontsize=15)
 plt.hlines(y=min(rlat_f), xmin=min(rlon_f), xmax=max(rlon_f), color='red',linestyles= 'dashed', linewidth=2)
 plt.hlines(y=max(rlat_f), xmin=min(rlon_f), xmax=max(rlon_f), color='red',linestyles= 'dashed', linewidth=2)
@@ -101,7 +113,7 @@ plt.hlines(y=min(rlat_o[buffer:-buffer]), xmin=min(rlon_o[buffer:-buffer]), xmax
 plt.hlines(y=max(rlat_o[buffer:-buffer]), xmin=min(rlon_o[buffer:-buffer]), xmax=max(rlon_o[buffer:-buffer]), color='black', linewidth=4)
 plt.vlines(x=min(rlon_o[buffer:-buffer]), ymin=min(rlat_o[buffer:-buffer]), ymax=max(rlat_o[buffer:-buffer]), color='black', linewidth=4)
 plt.vlines(x=max(rlon_o[buffer:-buffer]), ymin=min(rlat_o[buffer:-buffer]), ymax=max(rlat_o[buffer:-buffer]), color='black', linewidth=4)
-Plot_CCLM(dir_mistral='/work/bb0962/work3/member_relax_3_big/post/',name='member_relax_3_T_2M_ts_monmean_1995.nc',bcolor='red',var='T_2M',flag='FALSE',color_map='TRUE', alph=1, grids='FALSE', grids_color='red', rand_obs='TRUE', NN=NN)
+Plot_CCLM(dir_mistral='/work/bb0962/work3/member_relax_3_big/post/',name='member_relax_3_T_2M_ts_monmean_1995.nc',bcolor='black',var='T_2M',flag='FALSE',color_map='TRUE', alph=1, grids='FALSE', grids_color='red', rand_obs='TRUE', NN=NN)
 plt.title("Shift "+ str(4)+pdf_name)
 
 xs, ys, zs = rp.transform_points(pc,

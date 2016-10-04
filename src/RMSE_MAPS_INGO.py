@@ -234,13 +234,8 @@ for i in range(4,5):
     #                                          semiminor_axis=6370000))
     ax.set_xlim(xs)
     ax.set_ylim(ys)
-   # Plot_CCLM(bcolor='black', grids='FALSE', flag='FALSE')
+
     plt.savefig(pdf_name)
 
     plt.close()
-    ## TODO : I will create noisy observations for the OI scheme
-    ## TODO: Then I will conduct the OI to see if it improves the results for the shifted domain inth 4 direction!!
 
-
-#
-#
