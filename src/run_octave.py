@@ -6,8 +6,8 @@ DIR='/home/fallah/Documents/DATA_ASSIMILATION/Bijan/CODES/Optimal_Interpolation/
 octave.run(DIR+"run_IO.m")
 
 ## read forecast :
-#NN=1000#number of observations should be read from previous funcions!!!!
-NN=600
+NN=1000#number of observations should be read from previous funcions!!!!
+#NN=600
 month_length=12
 t_f, lat_f, lon_f, rlat_f, rlon_f =rdfm(dir='/work/bb0962/work3/member04_relax_3_big/post/',
                                         name='member04_relax_3_T_2M_ts_monmean_1995.nc',

@@ -11,8 +11,8 @@ error variance of the background field
 
 #Step 1:
 flag1=True
-#NN=1000#number of observations
-NN=600
+NN=1000#number of observations
+#NN=600
 import pandas as pd
 from make_pseudo_obs import extract_pseudo
 Obs = pd.read_csv('Stations_DATA.csv')
