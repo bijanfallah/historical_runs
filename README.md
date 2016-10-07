@@ -5,5 +5,5 @@ Version 0.0
 
 ### How to run the code:
 
-
+* First the monthly temperature values shall be calculated for CCLM outputs. This is done by my script ""
 
