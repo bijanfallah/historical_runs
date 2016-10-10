@@ -3,7 +3,7 @@
 This is the suplemantary material for my submitted paper about the usage of Optimal Interpolation in long-term climate simulations
 Version 0.0
 
-The optimal interpolation Fortran module with Octave interface of GeoHydrodynamics and Environment Research (GHER) is used. The code and the documentation can be obtained at their website (http://modb.oce.ulg.ac.be/mediawiki/index.php/Optimal_interpolation_Fortran_module_with_Octave_interface)
+* The optimal interpolation Fortran module with Octave interface of GeoHydrodynamics and Environment Research (GHER) is used. The code and the documentation can be obtained at their website (http://modb.oce.ulg.ac.be/mediawiki/index.php/Optimal_interpolation_Fortran_module_with_Octave_interface)
 ## How to run the code:
 
 * First the monthly temperature values shall be calculated for CCLM outputs. 
