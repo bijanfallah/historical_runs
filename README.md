@@ -1,10 +1,16 @@
 # Optimal Interpolation for CCLM Regional Climate Model
+
 * Optimal Interpolation of Psdeudo observations in CCLM model
 This is the suplemantary material for my submitted paper about the usage of Optimal Interpolation in long-term climate simulations Version 0.0
 
 * The paper is available at https://arxiv.org/abs/1610.03225
 
 * The optimal interpolation Fortran module with Octave interface of GeoHydrodynamics and Environment Research (GHER) is used. The code and the documentation can be obtained at their website (http://modb.oce.ulg.ac.be/mediawiki/index.php/Optimal_interpolation_Fortran_module_with_Octave_interface)
+
+* Please also check my other Publications at https://www.researchgate.net/profile/Bijan_Fallah
+
+* For any comment or suggestions please contact me at : info@bijan-fallah.com or bijan.fallah@gmail.com
+
 ## How to run the code:
 
 * First the monthly temperature values shall be calculated for CCLM outputs. 
