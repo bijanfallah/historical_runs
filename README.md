@@ -1,7 +1,6 @@
 # Optimal Interpolation for CCLM Regional Climate Model
 
-* Optimal Interpolation of Psdeudo observations in CCLM model
-This is the suplemantary material for my submitted paper about the usage of Optimal Interpolation in long-term climate simulations Version 0.0
+* Optimal Interpolation of Psdeudo observations in CCLM model : This is the suplemantary material for my submitted paper about the usage of Optimal Interpolation in long-term climate simulations (Version 0.0)
 
 * The paper is available at https://arxiv.org/abs/1610.03225
 
